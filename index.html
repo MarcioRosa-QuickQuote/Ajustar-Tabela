@@ -62,7 +62,7 @@
                     mammoth.convertToHtml({ arrayBuffer })
                         .then(function(result) {
                             const formattedHtml = formatHtml(result.value);
-                            document.getElementById('output').innerHTML = formattedHtml;
+                            document.getElementById('output').innerText = formattedHtml;
                             document.getElementById('textInput').value = formattedHtml;
                         })
                         .catch(console.error);
@@ -72,11 +72,11 @@
         });
 
         document.getElementById('textInput').addEventListener('input', function(event) {
-            document.getElementById('output').innerHTML = event.target.value;
+            document.getElementById('output').innerText = formatHtml(event.target.value);
         });
 
         function copyToClipboard() {
-            const text = document.getElementById('output').innerHTML;
+            const text = document.getElementById('output').innerText;
             navigator.clipboard.writeText(text).then(() => {
                 alert('Código-fonte copiado para a área de transferência!');
             });
@@ -89,7 +89,39 @@
                     th, td { border: 1px solid black; padding: 8px; text-align: left; }
                     th { background-color: #f2f2f2; }
                     p { margin: 10px 0; text-align: justify; text-indent: 70.9pt; }
-                </style></head><body>` + html + `</body></html>`;
+                </style></head><body>` + convertToTable(html) + `</body></html>`;
+        }
+
+        function convertToTable(html) {
+            let lines = html.split('\n');
+            let tableStarted = false;
+            let formattedHtml = '';
+
+            for (let line of lines) {
+                if (line.includes('\t')) {
+                    let cells = line.split('\t');
+                    if (!tableStarted) {
+                        formattedHtml += '<table><tbody>';
+                        tableStarted = true;
+                    }
+                    formattedHtml += '<tr>';
+                    for (let cell of cells) {
+                        formattedHtml += `<td>${cell.trim()}</td>`;
+                    }
+                    formattedHtml += '</tr>';
+                } else {
+                    if (tableStarted) {
+                        formattedHtml += '</tbody></table>';
+                        tableStarted = false;
+                    }
+                    formattedHtml += `<p>${line.trim()}</p>`;
+                }
+            }
+
+            if (tableStarted) {
+                formattedHtml += '</tbody></table>';
+            }
+            return formattedHtml;
         }
     </script>
 </body>
