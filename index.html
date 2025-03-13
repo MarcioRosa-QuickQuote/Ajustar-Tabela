@@ -62,7 +62,7 @@
                     mammoth.convertToHtml({ arrayBuffer })
                         .then(function(result) {
                             const formattedHtml = formatHtml(result.value);
-                            document.getElementById('output').innerText = formattedHtml;
+                            document.getElementById('output').innerHTML = formattedHtml;
                             document.getElementById('textInput').value = formattedHtml;
                         })
                         .catch(console.error);
@@ -72,11 +72,11 @@
         });
 
         document.getElementById('textInput').addEventListener('input', function(event) {
-            document.getElementById('output').innerText = event.target.value;
+            document.getElementById('output').innerHTML = event.target.value;
         });
 
         function copyToClipboard() {
-            const text = document.getElementById('output').innerText;
+            const text = document.getElementById('output').innerHTML;
             navigator.clipboard.writeText(text).then(() => {
                 alert('Código-fonte copiado para a área de transferência!');
             });
@@ -85,7 +85,7 @@
         function formatHtml(html) {
             return `<!DOCTYPE html><html lang='pt-BR'><head><meta charset='UTF-8'>
                 <style>
-                    table { width: 100%; border-collapse: collapse; margin-left: 151px; }
+                    table { width: 100%; border-collapse: collapse; margin-left: 151px; border: 1px solid black; }
                     th, td { border: 1px solid black; padding: 8px; text-align: left; }
                     th { background-color: #f2f2f2; }
                     p { margin: 10px 0; text-align: justify; text-indent: 70.9pt; }
