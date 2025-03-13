@@ -1,128 +1,71 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conversor de Word para Código-Fonte SIGA-DOC</title>
+    <title>Documento Formatado</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            max-width: 700px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #f4f4f4;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            background: white;
+            text-align: justify;
         }
-        textarea, input {
+        table {
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            border-collapse: collapse;
+            margin-left: 40px;
         }
-        button {
-            width: 100%;
-            padding: 10px;
-            background: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+        td, th {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
         }
-        button:hover {
-            background: #0056b3;
-        }
-        .output {
-            background: #eee;
-            padding: 10px;
-            min-height: 100px;
-            white-space: pre-wrap;
-            border-radius: 5px;
-            overflow-x: auto;
+        .indent {
+            text-indent: 40px;
         }
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
 </head>
 <body>
-    <h2>Conversor de Word para Código-Fonte SIGA-DOC</h2>
-    <input type="file" id="fileInput" accept=".docx">
-    <textarea id="textInput" placeholder="Cole seu texto aqui..."></textarea>
-    <button onclick="copyToClipboard()">Copiar Código-Fonte</button>
-    <div class="output" id="output"></div>
+    <p><strong>SIGA-DOC n.:</strong> TJPA-REQ-2025/03064</p>
+    <p><strong>Requerente:</strong> LUIZ GONZAGA DA COSTA NETO – Desembargador</p>
+    <p><strong>Referência:</strong> Indenização de férias</p>
     
-    <script>
-        document.getElementById('fileInput').addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const arrayBuffer = e.target.result;
-                    mammoth.convertToHtml({ arrayBuffer })
-                        .then(function(result) {
-                            const formattedHtml = formatHtml(result.value);
-                            document.getElementById('output').innerText = formattedHtml;
-                            document.getElementById('textInput').value = formattedHtml;
-                        })
-                        .catch(console.error);
-                };
-                reader.readAsArrayBuffer(file);
-            }
-        });
-
-        document.getElementById('textInput').addEventListener('input', function(event) {
-            document.getElementById('output').innerText = formatHtml(event.target.value);
-        });
-
-        function copyToClipboard() {
-            const text = document.getElementById('output').innerText;
-            navigator.clipboard.writeText(text).then(() => {
-                alert('Código-fonte copiado para a área de transferência!');
-            });
-        }
-
-        function formatHtml(html) {
-            return `<!DOCTYPE html><html lang='pt-BR'><head><meta charset='UTF-8'>
-                <style>
-                    table { width: 100%; border-collapse: collapse; margin-left: 151px; border: 1px solid black; }
-                    th, td { border: 1px solid black; padding: 8px; text-align: left; }
-                    th { background-color: #f2f2f2; }
-                    p { margin: 10px 0; text-align: justify; text-indent: 70.9pt; }
-                </style></head><body>` + convertToTable(html) + `</body></html>`;
-        }
-
-        function convertToTable(html) {
-            let lines = html.split('\n');
-            let tableStarted = false;
-            let formattedHtml = '';
-
-            for (let line of lines) {
-                if (line.includes('\t')) {
-                    let cells = line.split('\t');
-                    if (!tableStarted) {
-                        formattedHtml += '<table><tbody>';
-                        tableStarted = true;
-                    }
-                    formattedHtml += '<tr>';
-                    for (let cell of cells) {
-                        formattedHtml += `<td>${cell.trim()}</td>`;
-                    }
-                    formattedHtml += '</tr>';
-                } else {
-                    if (tableStarted) {
-                        formattedHtml += '</tbody></table>';
-                        tableStarted = false;
-                    }
-                    formattedHtml += `<p>${line.trim()}</p>`;
-                }
-            }
-
-            if (tableStarted) {
-                formattedHtml += '</tbody></table>';
-            }
-            return formattedHtml;
-        }
-    </script>
+    <h3>DECISÃO</h3>
+    <p class="indent">Trata-se de expediente formalizado pelo desembargador LUIZ GONZAGA DA COSTA NETO, por meio do qual requer a indenização de férias relativo ao mês de setembro/2023 (30 dias), referentes aos períodos aquisitivos 2018.2 (4 dias) e 2019.1 (26 dias), as quais foram suspensas por necessidade do serviço, por meio da Portaria nº 03816/2023-GP.</p>
+    
+    <table>
+        <tr>
+            <th>Período</th>
+            <th>Saldo em dias</th>
+            <th>Pagamento do Terço Constitucional</th>
+            <th>Ato Normativo</th>
+            <th>Observação</th>
+        </tr>
+        <tr>
+            <td>2018.2</td>
+            <td>4</td>
+            <td>2706/2018</td>
+            <td>Portaria N° 3816/2023-GP</td>
+            <td>DJ 7676 de 04/09/2023 - Suspensão por necessidade de serviço</td>
+        </tr>
+        <tr>
+            <td>2019.1</td>
+            <td>26</td>
+            <td>26/04/2019</td>
+            <td>Portaria N° 3816/2023-GP</td>
+            <td>DJ 7676 de 04/09/2023 - Suspensão por necessidade de serviço</td>
+        </tr>
+    </table>
+    
+    <p class="indent">Conforme quadro analítico supracitado, remanescem 186 (cento e oitenta e seis) dias de saldo de férias e os períodos mais antigos a serem indenizados são o 2018.2 e o 2019.1.</p>
+    <p class="indent">À fl. 5, o Serviço de Pagamento de Magistrados informou que “até o presente momento, no ano de 2025, não foi registrado pagamento de indenização de férias”.</p>
+    
+    <p class="indent">Submetido o pedido a parecer, a Secretaria de Gestão de Pessoas (SGP) manifestou-se favorável ao pedido de indenização de 30 (trinta) dias de férias suspensas por necessidade de serviço, referentes aos períodos aquisitivos 2018.2 (4 dias) e 2019.1 (26 dias), sem a incidência do Imposto de Renda.</p>
+    
+    <h3>DECISÃO FINAL</h3>
+    <p class="indent">Ante o exposto, defiro o pedido e autorizo a indenização em favor do desembargador LUIZ GONZAGA DA COSTA NETO, referente ao período aquisitivo 2018.2 e 2019.1, em tudo nos estritos limites e parâmetros fixados no parecer técnico da SGP.</p>
+    
+    <p><strong>Belém, 13 de março de 2025.</strong></p>
+    <p><strong>Des. ROBERTO GONÇALVES MOURA</strong></p>
+    <p>Presidente do Tribunal de Justiça do Estado do Pará</p>
 </body>
 </html>
